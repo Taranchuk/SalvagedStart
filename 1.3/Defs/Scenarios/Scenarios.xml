@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ScenPartDef>
+    <defName>SS_ConfigPage_SalvagedStart</defName>
+    <label>salvaged start</label>
+    <category>Fixed</category>
+    <scenPartClass>SalvagedStart.ScenPart_ConfigPage_SalvagedStart</scenPartClass>
+	<pageClass>SalvagedStart.Page_LoadShips</pageClass>
+    <summaryPriority>500</summaryPriority>
+  </ScenPartDef>
+  
+  <ScenarioDef>
+    <defName>SS_SalvagedStart</defName>
+    <label>Salvaged start</label>
+    <description>.</description>
+    <scenario>
+      <summary>Salvaged start.</summary>
+      <playerFaction>
+        <def>PlayerFaction</def>
+        <factionDef>PlayerColony</factionDef>
+      </playerFaction>
+      <parts>
+
+
+        <li Class="SalvagedStart.ScenPart_ConfigPage_SalvagedStart">
+          <def>SS_ConfigPage_SalvagedStart</def>
+        </li>
+		
+        <li Class="ScenPart_GameStartDialog">
+          <def>GameStartDialog</def>
+          <textKey>SS.GameStartDialog</textKey>
+          <closeSound>GameStartSting</closeSound>
+        </li>
+
+      </parts>
+    </scenario>
+  </ScenarioDef>
+
+</Defs>
