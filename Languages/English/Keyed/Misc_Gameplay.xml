@@ -10,5 +10,5 @@
 	<SS.ItemsToBeLoaded>Items to be loaded</SS.ItemsToBeLoaded>
 	<SS.LoadSave>Load save</SS.LoadSave>
 	<SS.SetLoadout>Load pawns and items</SS.SetLoadout>
-	<SS.ParsingSave>Parsing save, please be patient.</SS.ParsingSave>
+	<SS.ParsingSave>Parsing save, please be patient...</SS.ParsingSave>
 </LanguageData>
