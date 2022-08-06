@@ -19,6 +19,7 @@ namespace SalvagedStart
 		public Faction playerFaction;
 		public Dialog_LoadShips(Map map, List<CompTransporter> transporters, List<Pawn> pawns, List<Thing> items, Faction playerFaction) : base(map, transporters)
         {
+
             this.pawns = pawns;
             this.items = items;
             this.playerFaction = playerFaction;
@@ -120,6 +121,10 @@ namespace SalvagedStart
 			{
 				return false;
 			}
+			foreach (var transporter in transporters)
+			{
+				transporter.GetDirectlyHeldThings().Clear();
+			}
 			int i;
 			for (i = 0; i < transferables.Count; i++)
 			{
@@ -128,7 +133,6 @@ namespace SalvagedStart
 					transporters[i % transporters.Count].GetDirectlyHeldThings().TryAdd(splitPiece.TryMakeMinified());
 				});
 			}
-			ScenPart_ConfigPage_SalvagedStart.transporters = transporters.ListFullCopy();
 			return true;
 		}
 
@@ -175,12 +179,6 @@ namespace SalvagedStart
 		{
 			IEnumerable<TransferableOneWay> source = transferables.Where((TransferableOneWay x) => x.ThingDef.category == ThingCategory.Pawn);
 			widget.AddSection("ColonistsSection".Translate(), source.Where((TransferableOneWay x) => ((Pawn)x.AnyThing).IsFreeNonSlaveColonist));
-			//if (ModsConfig.IdeologyActive)
-			//{
-			//	widget.AddSection("SlavesSection".Translate(), source.Where((TransferableOneWay x) => ((Pawn)x.AnyThing).IsSlave));
-			//}
-			//widget.AddSection("PrisonersSection".Translate(), source.Where((TransferableOneWay x) => ((Pawn)x.AnyThing).IsPrisoner));
-			//widget.AddSection("CaptureSection".Translate(), source.Where((TransferableOneWay x) => ((Pawn)x.AnyThing).Downed && CaravanUtility.ShouldAutoCapture((Pawn)x.AnyThing, playerFaction)));
 			widget.AddSection("AnimalsSection".Translate(), source.Where((TransferableOneWay x) => ((Pawn)x.AnyThing).RaceProps.Animal));
 		}
 
