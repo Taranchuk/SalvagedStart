@@ -184,10 +184,11 @@ namespace SalvagedStart
 			pawn.apparel?.WornApparel.RemoveAll(x => x is null || x.def is null);
 			pawn.health.hediffSet.hediffs.RemoveAll(x => x is null || x.def is null);
 			pawn.equipment?.equipment.RemoveAll(x => x is null || x.def is null);
-			pawn.inventory?.innerContainer.RemoveAll(x => x is null || x.def is null);
+			pawn.inventory?.innerContainer.RemoveAll(x => CanBeTransferred(x) is false);
 			pawn.jobs = new Pawn_JobTracker(pawn);
 			pawn.pather = new Pawn_PathFollower(pawn);
 			pawn.roping = new Pawn_RopeTracker(pawn);
+
 			if (pawn.RaceProps.Humanlike)
             {
 				pawn.ideo = new Pawn_IdeoTracker(pawn);
@@ -240,7 +241,7 @@ namespace SalvagedStart
 
 		private static bool CanBeTransferred(Thing thing)
         {
-			if (thing.def.category == ThingCategory.Item)
+			if (thing?.def?.category == ThingCategory.Item)
             {
 				if (thing is Corpse)
                 {
@@ -254,6 +255,12 @@ namespace SalvagedStart
                 {
 					return false;
 				}
+
+				var comp = thing.TryGetComp<CompIngredients>();
+				if (comp != null && (comp.ingredients is null || comp.ingredients.Any(x => x is null)))
+                {
+					return false;
+                }
 				return true;
             }
 			return false;

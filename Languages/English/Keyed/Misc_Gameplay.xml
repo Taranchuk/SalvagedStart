@@ -3,4 +3,6 @@
 
   <SS.GameStartDialog>Salvaged start.</SS.GameStartDialog>
 	<SS.ScenPart_SalvagedStart>Salvaged start</SS.ScenPart_SalvagedStart>
+	<SS.ShipsToBeLaunched>Ships to be launched</SS.ShipsToBeLaunched>
+	<SS.ColonistsToBeLoaded>Colonists to be loaded ({0} pilots)</SS.ColonistsToBeLoaded>
 </LanguageData>
