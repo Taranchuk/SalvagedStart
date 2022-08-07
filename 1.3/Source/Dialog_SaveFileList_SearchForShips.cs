@@ -253,25 +253,25 @@ namespace SalvagedStart
             int numRemoved;
             if ((numRemoved = CleanupList(pawn.apparel?.WornApparel)) > 0)
             {
-                Messages.Message("SS.LostDefList".Translate("Apparel", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                Messages.Message("SS.LostDefList".Translate("SS.WornClothing".Translate(), numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
             }
             if ((numRemoved = CleanupList(pawn.health.hediffSet.hediffs)) > 0)
             {
-                Messages.Message("SS.LostDefList".Translate("Hediff", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                Messages.Message("SS.LostDefList".Translate("SS.InjuryOrDisease".Translate(), numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
             }
             if ((numRemoved = CleanupList(pawn.equipment?.equipment.innerList)) > 0)
             {
-                Messages.Message("SS.LostDefList".Translate("Equipment", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                Messages.Message("SS.LostDefList".Translate("SS.Equipment".Translate(), numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
             }
             if ((numRemoved = CleanupList(pawn.inventory?.innerContainer.innerList, x => CanBeTransferred(x) is false)) > 0)
             {
-                Messages.Message("SS.LostDefList".Translate("Inventory items", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                Messages.Message("SS.LostDefList".Translate("SS.InventoryItems".Translate(), numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
             }
             if ((numRemoved = CleanupList(pawn.relations?.directRelations, x => x.def is null || x.otherPawn is null)) > 0) {
-                Messages.Message("SS.LostDefList".Translate("Direct Relations", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                Messages.Message("SS.LostDefList".Translate("SS.DirectRelationships".Translate(), numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
             }
             if ((numRemoved = CleanupList(pawn.needs.mood?.thoughts.memories?.memories, x => x.def is null)) > 0) {
-                Messages.Message("SS.LostDefList".Translate("Memories", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                Messages.Message("SS.LostDefList".Translate("SS.Memories".Translate(), numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
             }
 			pawn.jobs = new Pawn_JobTracker(pawn);
 			pawn.pather = new Pawn_PathFollower(pawn);
@@ -321,26 +321,26 @@ namespace SalvagedStart
             {
 				if (pawn.story.hairDef is null)
                 {
-                    Messages.Message("SS.LostDef".Translate("Hair", pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                    Messages.Message("SS.LostDef".Translate("SS.Hair".Translate(), pawn.LabelShort), MessageTypeDefOf.CautionInput);
                     pawn.story.hairDef = PawnStyleItemChooser.RandomHairFor(pawn);
 				}
 				if (pawn.style != null)
 				{
 					if (pawn.style.beardDef is null)
                     {
-                        Messages.Message("SS.LostDef".Translate("Beard", pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                        Messages.Message("SS.LostDef".Translate("SS.Beard".Translate(), pawn.LabelShort), MessageTypeDefOf.CautionInput);
                         pawn.style.beardDef = ((pawn.gender == Gender.Male) ? PawnStyleItemChooser.ChooseStyleItem<BeardDef>(pawn) : BeardDefOf.NoBeard);
 					}
 					if (ModsConfig.IdeologyActive)
 					{
 						if (pawn.style.bodyTattoo is null)
                         {
-                            Messages.Message("SS.LostDef".Translate("Face tattoo", pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                            Messages.Message("SS.LostDef".Translate("SS.FaceTattoo".Translate(), pawn.LabelShort), MessageTypeDefOf.CautionInput);
                             pawn.style.faceTattoo = PawnStyleItemChooser.ChooseStyleItem<TattooDef>(pawn, TattooType.Face);
 						}
 						if (pawn.style.bodyTattoo is null)
                         {
-                            Messages.Message("SS.LostDef".Translate("Body tattoo", pawn.LabelShort), MessageTypeDefOf.CautionInput);
+                            Messages.Message("SS.LostDef".Translate("SS.BodyTattoo".Translate(), pawn.LabelShort), MessageTypeDefOf.CautionInput);
                             pawn.style.bodyTattoo = PawnStyleItemChooser.ChooseStyleItem<TattooDef>(pawn, TattooType.Body);
 						}
 					}
@@ -381,7 +381,7 @@ namespace SalvagedStart
 				var comp = thing.TryGetComp<CompIngredients>();
 				if (comp != null && (comp.ingredients is null || comp.ingredients.Any(x => x is null)))
                 {
-                    Messages.Message("SS.LostDef".Translate("Ingredients", thing.LabelShort), MessageTypeDefOf.CautionInput);
+                    Messages.Message("SS.LostDef".Translate("SS.Ingredients".Translate(), thing.LabelShort), MessageTypeDefOf.CautionInput);
 					return false;
                 }
 				return true;
