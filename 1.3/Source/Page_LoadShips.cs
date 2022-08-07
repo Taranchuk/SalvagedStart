@@ -134,6 +134,28 @@ namespace SalvagedStart
 					Find.GameInitData.startingAndOptionalPawns.Add(pawn);
 				}
 			}
+
+			foreach (var loadedPawn in Find.GameInitData.startingAndOptionalPawns)
+            {
+				foreach (Pawn potentiallyRelatedPawn in loadedPawn.relations.PotentiallyRelatedPawns)
+				{
+					if (Find.GameInitData.startingAndOptionalPawns.Contains(potentiallyRelatedPawn) || loadedPawn.needs == null || loadedPawn.needs.mood == null || !PawnUtility.ShouldGetThoughtAbout(loadedPawn, potentiallyRelatedPawn))
+					{
+						continue;
+					}
+					PawnRelationDef mostImportantRelation = potentiallyRelatedPawn.GetMostImportantRelation(loadedPawn);
+					if (mostImportantRelation != null)
+					{
+						ThoughtDef genderSpecificThought = mostImportantRelation.GetGenderSpecificThought(potentiallyRelatedPawn, PawnDiedOrDownedThoughtsKind.Lost);
+						if (genderSpecificThought != null)
+						{
+							var thought = new IndividualThoughtToAdd(genderSpecificThought, loadedPawn, potentiallyRelatedPawn);
+							thought.Add();
+						}
+					}
+				}
+			}
+
 			Find.GameInitData.startingPawnCount = Find.GameInitData.startingAndOptionalPawns.Count;
 			base.DoNext();
 
