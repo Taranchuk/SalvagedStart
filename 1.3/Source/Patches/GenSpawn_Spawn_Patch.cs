@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using RimWorld;
 using System.Collections.Generic;
 using Verse;
 
@@ -14,19 +13,9 @@ namespace SalvagedStart
 			if (arrivingThings.Contains(__result))
             {
 				arrivingThings.Remove(__result);
-				Log.Message("Should remove " + __result);
 				if (Rand.Chance(SalvagedStartMod.settings.shipCrashChance))
                 {
-					LongEventHandler.toExecuteWhenFinished.Add(delegate
-					{
-						var map = __result.Map;
-						__result.Destroy();
-						var size = __result.OccupiedRect().Area;
-						for (var i = 0; i < size; i++)
-						{
-							GenPlace.TryPlaceThing(ThingMaker.MakeThing(ThingDefOf.ChunkSlagSteel), __result.OccupiedRect().RandomCell, map, ThingPlaceMode.Direct);
-						}
-					});
+					Current.Game.GetComponent<GameComponent_DestroyThings>().thingsToDestroy.Add(__result);
                 }
 			}
 		}

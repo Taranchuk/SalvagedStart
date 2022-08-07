@@ -3,7 +3,6 @@
 
   <SS.GameStartDialog>Salvaged start.</SS.GameStartDialog>
   <SS.SalvagedStart>Salvaged start</SS.SalvagedStart>
-	<SS.ScenPart_SalvagedStart>Salvaged start</SS.ScenPart_SalvagedStart>
 	<SS.ShipsToBeLaunched>Ships to be launched</SS.ShipsToBeLaunched>
 	<SS.ColonistsToBeLoaded>Colonists to be loaded ({0} pilots)</SS.ColonistsToBeLoaded>
 	<SS.AnimalsToBeLoaded>Animals to be loaded</SS.AnimalsToBeLoaded>
@@ -13,4 +12,10 @@
 	<SS.ParsingSave>Parsing save, please be patient...</SS.ParsingSave>
 	<SS.LostDef>There was an issue loading {0} for {1}, attempting to remove/randomize...</SS.LostDef>
 	<SS.LostDefList>There was an issue loading {1} {0} definitions for {2}, they have been removed...</SS.LostDefList>
+	<SS.CrashChanceOfShips>Chance of crash of ships</SS.CrashChanceOfShips>
+	<SS.NoUsableShipsFound>No usable ships found in your save. Make sure that the save has ships spawned in your map. Only SRTS and SoS2 ships are supported.</SS.NoUsableShipsFound>
+	<SS.ScenPart_SalvagedStart_KeepResearch>Research retained from your save.</SS.ScenPart_SalvagedStart_KeepResearch>
+	<SS.ScenPart_SalvagedStart>Salvaged start. Extract pawns and items from your save.</SS.ScenPart_SalvagedStart>
+	<SS.ChanceOfDowningPawnUponCrash>Chance of downing pawn upon crash</SS.ChanceOfDowningPawnUponCrash>
+	<SS.ChanceOfOfExplosionUponCrash>Chance of explosion upon crash</SS.ChanceOfOfExplosionUponCrash>
 </LanguageData>

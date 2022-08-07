@@ -267,6 +267,12 @@ namespace SalvagedStart
             {
                 Messages.Message("SS.LostDefList".Translate("Inventory items", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
             }
+            if ((numRemoved = CleanupList(pawn.relations?.directRelations, x => x.def is null || x.otherPawn is null)) > 0) {
+                Messages.Message("SS.LostDefList".Translate("Direct Relations", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+            }
+            if ((numRemoved = CleanupList(pawn.needs.mood?.thoughts.memories?.memories, x => x.def is null)) > 0) {
+                Messages.Message("SS.LostDefList".Translate("Memories", numRemoved, pawn.LabelShort), MessageTypeDefOf.CautionInput);
+            }
 			pawn.jobs = new Pawn_JobTracker(pawn);
 			pawn.pather = new Pawn_PathFollower(pawn);
 			pawn.roping = new Pawn_RopeTracker(pawn);
@@ -373,14 +379,9 @@ namespace SalvagedStart
 				}
 
 				var comp = thing.TryGetComp<CompIngredients>();
-                if (comp != null)
-                {
-                    Log.Message(thing + " has " + comp + " - " + comp.ingredients?.Count + " - " + string.Join(", ", comp.ingredients ?? new List<ThingDef>()));
-                }
 				if (comp != null && (comp.ingredients is null || comp.ingredients.Any(x => x is null)))
                 {
                     Messages.Message("SS.LostDef".Translate("Ingredients", thing.LabelShort), MessageTypeDefOf.CautionInput);
-                    Log.Message("Cannot load " + thing);
 					return false;
                 }
 				return true;
@@ -393,18 +394,6 @@ namespace SalvagedStart
             parent.ships.Clear();
 			parent.pawns.Clear();
 			parent.items.Clear();
-        }
-    }
-
-    [HarmonyPatch(typeof(Pawn_IdeoTracker), nameof(Pawn_IdeoTracker.SetIdeo))]
-	public static class FIXIT
-    {
-		public static void Postfix(Pawn ___pawn)
-        {
-			if (___pawn.IsColonist)
-            {
-				Log.Message("Setting ideo for " + ___pawn);
-            }
         }
     }
 }

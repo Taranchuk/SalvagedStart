@@ -26,10 +26,14 @@ namespace SalvagedStart
     public class SalvagedStartSettings : ModSettings
     {
         public float shipCrashChance;
+        public float chanceOfDowningPawnUponCrash;
+        public float chanceOfOfExplosionUponCrash;
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref shipCrashChance, "shipCrashChance");
+            Scribe_Values.Look(ref chanceOfDowningPawnUponCrash, "chanceOfDowningPawnUponCrash");
+            Scribe_Values.Look(ref chanceOfOfExplosionUponCrash, "chanceOfOfExplosionUponCrash");
         }
         public void DoSettingsWindowContents(Rect inRect)
         {
@@ -37,6 +41,8 @@ namespace SalvagedStart
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(rect);
             listingStandard.SliderLabeled("SS.CrashChanceOfShips".Translate(), ref shipCrashChance, shipCrashChance.ToStringPercent());
+            listingStandard.SliderLabeled("SS.ChanceOfDowningPawnUponCrash".Translate(), ref chanceOfDowningPawnUponCrash, chanceOfDowningPawnUponCrash.ToStringPercent());
+            listingStandard.SliderLabeled("SS.ChanceOfOfExplosionUponCrash".Translate(), ref chanceOfOfExplosionUponCrash, chanceOfOfExplosionUponCrash.ToStringPercent());
             listingStandard.End();
         }
     }

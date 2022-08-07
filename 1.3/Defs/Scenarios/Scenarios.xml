@@ -23,7 +23,7 @@
     <label>Salvaged Start - Tribal</label>
     <description>.</description>
     <scenario>
-      <summary>Salvaged start.</summary>
+      <summary>Salvaged start. Extract pawns and items from your save.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerTribe</factionDef>
@@ -48,7 +48,7 @@
     <label>Salvaged Start - Crashlanded</label>
     <description>.</description>
     <scenario>
-      <summary>Salvaged start.</summary>
+      <summary>Salvaged start. Extract pawns and items from your save.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
@@ -70,11 +70,11 @@
   </ScenarioDef>
   
   <ScenarioDef>
-    <defName>SS_SalvagedStartCrashlandedt</defName>
-    <label>Salvaged Start - test</label>
+    <defName>SS_SalvagedStartResearchRetained</defName>
+    <label>Salvaged Start - Research Retained</label>
     <description>.</description>
     <scenario>
-      <summary>Salvaged start.</summary>
+      <summary>Salvaged start. Extract pawns and items from your save.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
@@ -91,7 +91,7 @@
 		
         <li Class="ScenPart_GameStartDialog">
           <def>GameStartDialog</def>
-          <textKey>SS.GameStartDialogCrashlanded</textKey>
+          <textKey>SS.GameStartDialogResearchRetained</textKey>
           <closeSound>GameStartSting</closeSound>
         </li>
 
