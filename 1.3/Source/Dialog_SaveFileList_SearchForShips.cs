@@ -228,10 +228,12 @@ namespace SalvagedStart
 
         private static void DoPawnCleanup(Pawn pawn)
         {
-			pawn.apparel?.WornApparel.RemoveAll(x => x is null || x.def is null);
+			pawn.apparel?.wornApparel.RemoveAll(x => x is null || x.def is null);
 			pawn.health.hediffSet.hediffs.RemoveAll(x => x is null || x.def is null);
 			pawn.equipment?.equipment.RemoveAll(x => x is null || x.def is null);
 			pawn.inventory?.innerContainer.RemoveAll(x => CanBeTransferred(x) is false);
+            pawn.relations?.directRelations?.RemoveAll(x => x.def is null || x.otherPawn is null);
+            pawn.needs.mood?.thoughts.memories?.memories.RemoveAll(x => x.def is null);
 			pawn.jobs = new Pawn_JobTracker(pawn);
 			pawn.pather = new Pawn_PathFollower(pawn);
 			pawn.roping = new Pawn_RopeTracker(pawn);
@@ -242,7 +244,6 @@ namespace SalvagedStart
             pawn.carryTracker = new Pawn_CarryTracker(pawn);
             pawn.ownership = new Pawn_Ownership(pawn);
             pawn.connections = new Pawn_ConnectionsTracker(pawn);
-
             if (pawn.RaceProps.Humanlike)
             {
                 if (pawn.guest == null)
@@ -334,13 +335,8 @@ namespace SalvagedStart
 				}
 
 				var comp = thing.TryGetComp<CompIngredients>();
-                if (comp != null)
-                {
-                    Log.Message(thing + " has " + comp + " - " + comp.ingredients?.Count + " - " + string.Join(", ", comp.ingredients ?? new List<ThingDef>()));
-                }
 				if (comp != null && (comp.ingredients is null || comp.ingredients.Any(x => x is null)))
                 {
-                    Log.Message("Cannot load " + thing);
 					return false;
                 }
 				return true;
@@ -353,18 +349,6 @@ namespace SalvagedStart
             parent.ships.Clear();
 			parent.pawns.Clear();
 			parent.items.Clear();
-        }
-    }
-
-    [HarmonyPatch(typeof(Pawn_IdeoTracker), nameof(Pawn_IdeoTracker.SetIdeo))]
-	public static class FIXIT
-    {
-		public static void Postfix(Pawn ___pawn)
-        {
-			if (___pawn.IsColonist)
-            {
-				Log.Message("Setting ideo for " + ___pawn);
-            }
         }
     }
 }

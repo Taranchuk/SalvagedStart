@@ -47,14 +47,20 @@ namespace SalvagedStart
 		}
 
 		public static List<CompTransporter> transporters = new List<CompTransporter>();
+		public static Pawn safePawn;
 		public override void GenerateIntoMap(Map map)
 		{
+			var pawns = new List<Pawn>();
 			foreach (var transporter in transporters)
             {
 				transporter.parent.SetFactionDirect(Faction.OfPlayer);
 				foreach (var pawn in transporter.innerContainer.OfType<Pawn>())
                 {
 					pawn.SetFactionDirect(Faction.OfPlayer);
+					if (pawn.IsColonist)
+                    {
+						pawns.Add(pawn);
+					}
 					if (pawn.ideo != null)
                     {
 						if (pawn.Faction != null && pawn.Faction.ideos.PrimaryIdeo != null)
@@ -73,6 +79,8 @@ namespace SalvagedStart
 					continue;
 				}
 			}
+
+			safePawn = pawns.RandomElement();
 		}
 	}
 }

@@ -55,6 +55,7 @@
     <Compile Include="Patches\Dialog_LoadTransporters_TryAccept_Patch.cs" />
     <Compile Include="Dialog_SaveFileList_SearchForShips.cs" />
     <Compile Include="HotSwappableAttribute.cs" />
+    <Compile Include="GameComponent_DestroyThings.cs" />
     <Compile Include="Patches\GenSpawn_Spawn_Patch.cs" />
     <Compile Include="Patches\Log_Error_Patch.cs" />
     <Compile Include="Patches\Log_Warning_Patch.cs" />
