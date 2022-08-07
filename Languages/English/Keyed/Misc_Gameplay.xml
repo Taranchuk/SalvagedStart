@@ -10,6 +10,19 @@
 	<SS.LoadSave>Load save</SS.LoadSave>
 	<SS.SetLoadout>Load pawns and items</SS.SetLoadout>
 	<SS.ParsingSave>Parsing save, please be patient...</SS.ParsingSave>
+	<SS.WornClothing>worn clothing</SS.WornClothing>
+	<SS.InjuryOrDisease>injury or disease</SS.InjuryOrDisease>
+	<SS.Equipment>equipment</SS.Equipment>
+	<SS.InventoryItems>inventory items</SS.InventoryItems>
+	<SS.DirectRelationships>direct relationships</SS.DirectRelationships>
+	<SS.Memories>memories</SS.Memories>
+	<SS.Hair>hair</SS.Hair>
+	<SS.Beard>beard</SS.Beard>
+	<SS.FaceTattoo>face tattoo</SS.FaceTattoo>
+	<SS.BodyTattoo>body tattoo</SS.BodyTattoo>
+	<SS.Ingredients>ingredients</SS.Ingredients>
+	<SS.LostDef>There was an issue loading {0} for {1}, attempting to remove/randomize...</SS.LostDef>
+	<SS.LostDefList>There was an issue loading {1} {0} definitions for {2}, they have been removed...</SS.LostDefList>
 	<SS.CrashChanceOfShips>Chance of crash of ships</SS.CrashChanceOfShips>
 	<SS.NoUsableShipsFound>No usable ships found in your save. Make sure that the save has ships spawned in your map. Only SRTS and SoS2 ships are supported.</SS.NoUsableShipsFound>
 	<SS.ScenPart_SalvagedStart_KeepResearch>Research retained from your save.</SS.ScenPart_SalvagedStart_KeepResearch>
