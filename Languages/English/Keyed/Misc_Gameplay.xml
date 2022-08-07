@@ -34,4 +34,16 @@
 	<SS.ShipCrashed>Ship crashed</SS.ShipCrashed>
 	<SS.ShipCrashedDesc>{PAWN_nameDef} lost control while attempting to land. {1} has been destroyed, and some of the passengers may have been injured.</SS.ShipCrashedDesc>
 	<SS.ShipCrashedExplosionDesc>{0} malfunctioned, causing an electrical fire. Despite {PAWN_nameDef}'s best efforts to control the landing, {0} crashed and exploded upon impact. Some of the passengers may have been injured.</SS.ShipCrashedExplosionDesc>
+	<SS.GameStartDialogTribal>Whether it be a horrific raid, natural disaster, or another catastrophe; your colonists decided to abandon their settlement and start anew.
+What they didn't expect, however, was to travel through a region with a powerful psychic wave. The wave disrupted electronic systems and amplified their trauma, forcing them to forget many of the lessons they learned, technology they developed, and innovations they worked hard to research.
+
+Your ships, unsteadily piloted by your dazed colonists, descend upon the landing site. As the survivors recover from the rough landing, they begin to take in this unknown rimworld, and try to make a most of what they have as a new tribe.</SS.GameStartDialogTribal>
+	<SS.GameStartDialogCrashlanded>Whether it be a horrific raid, natural disaster, or another catastrophe; your colonists decided to abandon their settlement and start anew.
+What they didn't expect, however, was to travel through a region with a powerful psychic wave. The wave disrupted electronic systems and amplified their trauma, forcing them to forget many of the lessons they learned, technology they developed, and innovations they worked hard to research.
+
+Your ships, unsteadily piloted by your dazed colonists, descend upon the landing site. As the survivors recover from the rough landing, they begin to take in this unknown rimworld, and try to make a most of what they have as a new colony.</SS.GameStartDialogCrashlanded>
+	<SS.GameStartDialogResearchRetained>Whether it be a horrific raid, natural disaster, or another catastrophe; your colonists decided to abandon their settlement and start anew.
+What they didn't expect, however, was to travel through a region with a powerful psychic wave. The wave disrupted electronic systems and amplified their trauma, forcing them to forget many of the lessons they learned and memories they've made.
+
+Your ships, unsteadily piloted by your dazed colonists, descend upon the landing site. As the survivors recover from the rough landing, they begin to take in this unknown rimworld, and try to make a most of what they have as a new colony.</SS.GameStartDialogResearchRetained>
 </LanguageData>

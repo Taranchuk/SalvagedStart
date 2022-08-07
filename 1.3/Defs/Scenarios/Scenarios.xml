@@ -21,9 +21,13 @@
   <ScenarioDef>
     <defName>SS_SalvagedStartTribal</defName>
     <label>Salvaged Start - Tribal</label>
-    <description>.</description>
+    <description>Whether it be a horrific raid, natural disaster, or another catastrophe; your colonists decided to abandon their settlement and start anew.
+What they didn't expect, however, was to travel through a region with a powerful psychic wave. The wave disrupted electronic systems and amplified their trauma, forcing them to forget many of the lessons they learned, technology they developed, and innovations they worked hard to research.
+
+Your colonists will arrive to a new world entirely on the ships they left with. Should they survive the landing, they will have to rebuild only with what they took with them, and a tribal-level understanding of the world.
+</description>
     <scenario>
-      <summary>Salvaged start. Extract pawns and items from your save.</summary>
+      <summary>Start with an existing save's colonists, pets, and items, but reset to tribal-level technology.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerTribe</factionDef>
@@ -46,9 +50,13 @@
   <ScenarioDef>
     <defName>SS_SalvagedStartCrashlanded</defName>
     <label>Salvaged Start - Crashlanded</label>
-    <description>.</description>
+    <description>Whether it be a horrific raid, natural disaster, or another catastrophe; your colonists decided to abandon their settlement and start anew.
+What they didn't expect, however, was to travel through a region with a powerful psychic wave. The wave disrupted electronic systems and amplified their trauma, forcing them to forget many of the lessons they learned, technology they developed, and innovations they worked hard to research.
+
+Your colonists will arrive to a new world entirely on the ships they left with. Should they survive the landing, they will have to rebuild only with what they took with them, and an industrial-level understanding of the world.
+This scenario uses the same starting technology as the Crashlanded scenario.</description>
     <scenario>
-      <summary>Salvaged start. Extract pawns and items from your save.</summary>
+      <summary>Start with an existing save's colonists, pets, and items, but reset to industrial-level technology.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
@@ -72,9 +80,13 @@
   <ScenarioDef>
     <defName>SS_SalvagedStartResearchRetained</defName>
     <label>Salvaged Start - Research Retained</label>
-    <description>.</description>
+    <description>Whether it be a horrific raid, natural disaster, or another catastrophe; your colonists decided to abandon their settlement and start anew.
+What they didn't expect, however, was to travel through a region with a powerful psychic wave. The wave disrupted electronic systems and amplified their trauma, forcing them to forget many of the lessons they learned and memories they've made.
+
+Your colonists will arrive to a new world entirely on the ships they left with. Should they survive the landing, they will have to rebuild only with what they took with them.
+This scenario copies the researched technologies of the source save file.</description>
     <scenario>
-      <summary>Salvaged start. Extract pawns and items from your save.</summary>
+      <summary>Start with an existing save's colonists, pets, and items, and retain their researched technologies.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
