@@ -1,6 +1,9 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -39,122 +42,145 @@ namespace SalvagedStart
             Messages.Message("SS.ParsingSave".Translate(), MessageTypeDefOf.CautionInput);
             toBeParsed = saveFileName;
         }
-
         private void DoLoad(string saveFileName)
         {
-            var saveFilePath = Path.GetFullPath(GenFilePaths.FilePathForSavedGame(saveFileName));
-            var doc = new XmlDocument();
-            doc.Load(saveFilePath);
-            var root = doc.DocumentElement;
-            var factionNodes = root.SelectNodes("//savegame/game/world/factionManager/allFactions/li");
-            var ideoNodes = root.SelectNodes("//savegame/game/world/ideoManager/ideos/li");
-            var thingNodes = root.SelectNodes("//savegame/game/maps/li/things/thing");
-            Scribe.mode = LoadSaveMode.LoadingVars;
-            Log_Error_Patch.suppressMessages = true;
-
-            var ideos = new List<Ideo>();
-            foreach (XmlNode ideoNode in ideoNodes)
+            try
             {
-                var ideo = ScribeExtractor.SaveableFromNode<Ideo>(ideoNode, null);
-                if (ideo != null)
-                {
-                    ideos.Add(ideo);
-                }
-            }
+                var saveFilePath = Path.GetFullPath(GenFilePaths.FilePathForSavedGame(saveFileName));
+                var doc = new XmlDocument();
+                doc.Load(saveFilePath);
+                var root = doc.DocumentElement;
+                var factionNodes = root.SelectNodes("//savegame/game/world/factionManager/allFactions/li");
+                var ideoNodes = root.SelectNodes("//savegame/game/world/ideoManager/ideos/li");
+                var thingNodes = root.SelectNodes("//savegame/game/maps/li/things/thing");
+                Scribe.mode = LoadSaveMode.LoadingVars;
+                Log_Error_Patch.suppressMessages = true;
 
-            var factions = new List<Faction>();
+                parent.oldWorld = Current.CreatingWorld;
+                var newWorld = new World();
+                Current.CreatingWorld = newWorld;
+                newWorld.worldObjects = new WorldObjectsHolder();
+                newWorld.factionManager = new FactionManager();
+                newWorld.ideoManager = new IdeoManager();
+                newWorld.worldPawns = new WorldPawns();
+                newWorld.gameConditionManager = new GameConditionManager(newWorld);
+                newWorld.storyState = new StoryState(newWorld);
+                newWorld.renderer = new WorldRenderer();
+                newWorld.UI = new WorldInterface();
+                newWorld.grid = new WorldGrid();
+                newWorld.pathGrid = new WorldPathGrid();
+                newWorld.FillComponents();
+                parent.oldFaction = Find.GameInitData.playerFaction;
+                Find.GameInitData.playerFaction = parent.loadedPlayerFaction;
 
-            foreach (XmlNode factionNode in factionNodes)
-            {
-                var faction = ScribeExtractor.SaveableFromNode<Faction>(factionNode, null);
-                if (faction?.def != null)
+                var ideos = new List<Ideo>();
+                foreach (XmlNode ideoNode in ideoNodes)
                 {
-                    factions.Add(faction);
-                }
-            }
-
-            var things = new Dictionary<Thing, XmlNode>();
-            foreach (XmlNode thingNode in thingNodes)
-            {
-                var thing = ScribeExtractor.SaveableFromNode<Thing>(thingNode, null);
-                if (thing != null)
-                {
-                    things[thing] = thingNode;
-                }
-            }
-            Scribe.loader.FinalizeLoading();
-            parent.loadedPlayerFaction = factions.FirstOrDefault(x => x.def.isPlayer);
-            if (parent.loadedPlayerFaction is null)
-            {
-                parent.loadedPlayerFaction = new Faction
-                {
-                    def = FactionDefOf.PlayerColony
-                };
-            }
-
-            foreach (var thingItem in things)
-            {
-                var thing = thingItem.Key;
-                var thingNode = thingItem.Value;
-                var factionId = GetFactionId(thingNode);
-                var thingFaction = thing.Faction ?? factions.FirstOrDefault(x => x.loadID == factionId);
-                if (thing is Pawn pawn)
-                {
-                    var shuttle = GetPlayerShuttle(thing, thingFaction);
-                    if (shuttle != null)
+                    var ideo = ScribeExtractor.SaveableFromNode<Ideo>(ideoNode, null);
+                    if (ideo != null)
                     {
-                        parent.ships[shuttle.TryGetComp<CompTransporter>()] = true;
+                        ideos.Add(ideo);
+                    }
+                }
+
+                var factions = new List<Faction>();
+                foreach (XmlNode factionNode in factionNodes)
+                {
+                    var faction = ScribeExtractor.SaveableFromNode<Faction>(factionNode, null);
+                    if (faction?.def != null)
+                    {
+                        factions.Add(faction);
+                    }
+                }
+
+                var things = new Dictionary<Thing, XmlNode>();
+                foreach (XmlNode thingNode in thingNodes)
+                {
+                    var thing = ScribeExtractor.SaveableFromNode<Thing>(thingNode, null);
+                    if (thing != null)
+                    {
+                        things[thing] = thingNode;
+                    }
+                }
+
+                Scribe.loader.FinalizeLoading();
+                parent.loadedPlayerFaction = factions.FirstOrDefault(x => x.def.isPlayer);
+                if (parent.loadedPlayerFaction is null)
+                {
+                    parent.loadedPlayerFaction = new Faction
+                    {
+                        def = FactionDefOf.PlayerColony
+                    };
+                }
+                newWorld.factionManager.Add(parent.loadedPlayerFaction);
+
+                foreach (var thingItem in things)
+                {
+                    var thing = thingItem.Key;
+                    var thingNode = thingItem.Value;
+                    var factionId = GetFactionId(thingNode);
+                    var thingFaction = thing.Faction ?? factions.FirstOrDefault(x => x.loadID == factionId);
+                    if (thing is Pawn pawn)
+                    {
+                        var shuttle = GetPlayerShuttle(thing, thingFaction);
+                        if (shuttle != null)
+                        {
+                            parent.ships[shuttle.TryGetComp<CompTransporter>()] = true;
+                        }
+                        else
+                        {
+                            if (pawn.kindDef is null)
+                            {
+                                if (pawn.RaceProps.Humanlike)
+                                {
+                                    pawn.kindDef = PawnKindDefOf.Colonist;
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                            if (thingFaction != null && thingFaction.IsPlayer)
+                            {
+                                if (pawn.Faction is null)
+                                {
+                                    pawn.SetFactionDirect(thingFaction);
+                                }
+                                DoPawnCleanup(pawn);
+                                parent.pawns.Add(pawn);
+                            }
+                        }
                     }
                     else
                     {
-                        if (pawn.kindDef is null)
+                        var shuttle = GetPlayerShuttle(thing, thingFaction);
+                        if (shuttle != null)
                         {
-                            if (pawn.RaceProps.Humanlike)
-                            {
-                                pawn.kindDef = PawnKindDefOf.Colonist;
-                            }
-                            else
-                            {
-                                continue;
-                            }
+                            parent.ships[shuttle.TryGetComp<CompTransporter>()] = true;
                         }
-                        if (thingFaction != null && thingFaction.IsPlayer)
+                        else if (CanBeTransferred(thing))
                         {
-                            if (pawn.Faction is null)
-                            {
-                                pawn.SetFactionDirect(thingFaction);
-                            }
-                            DoPawnCleanup(pawn);
-                            parent.pawns.Add(pawn);
+                            parent.items.Add(thing);
                         }
                     }
+                }
+
+                Log_Error_Patch.suppressMessages = false;
+                var shipsToBeLaunched = parent.ships.Where(x => x.Value).Select(x => x.Key).ToList();
+                if (shipsToBeLaunched.Any() is false)
+                {
+                    var window = new Dialog_MessageBox("SS.NoUsableShipsFound".Translate());
+                    Find.WindowStack.Add(window);
                 }
                 else
                 {
-                    var shuttle = GetPlayerShuttle(thing, thingFaction);
-                    if (shuttle != null)
-                    {
-                        parent.ships[shuttle.TryGetComp<CompTransporter>()] = true;
-                    }
-                    else if (CanBeTransferred(thing))
-                    {
-                        parent.items.Add(thing);
-                    }
+                    var window = new Dialog_LoadShips(null, parent.ships.Keys.ToList(), parent.pawns, parent.items, parent.loadedPlayerFaction);
+                    Find.WindowStack.Add(window);
                 }
             }
-
-
-            Log_Error_Patch.suppressMessages = false;
-            var shipsToBeLaunched = parent.ships.Where(x => x.Value).Select(x => x.Key).ToList();
-            if (shipsToBeLaunched.Any() is false)
+            catch (Exception ex)
             {
-                var window = new Dialog_MessageBox("SS.NoUsableShipsFound".Translate());
-                Find.WindowStack.Add(window);
-            }
-            else
-            {
-                var window = new Dialog_LoadShips(null, parent.ships.Keys.ToList(), parent.pawns, parent.items, parent.loadedPlayerFaction);
-                Find.WindowStack.Add(window);
+                Log.Error("Exception in " + ex);
             }
         }
 
@@ -208,8 +234,38 @@ namespace SalvagedStart
 			pawn.jobs = new Pawn_JobTracker(pawn);
 			pawn.pather = new Pawn_PathFollower(pawn);
 			pawn.roping = new Pawn_RopeTracker(pawn);
+            pawn.mindState = new Pawn_MindState(pawn);
+            pawn.needs = new Pawn_NeedsTracker(pawn);
+            pawn.meleeVerbs = new Pawn_MeleeVerbs(pawn);
+            pawn.verbTracker = new VerbTracker(pawn);
+            pawn.carryTracker = new Pawn_CarryTracker(pawn);
+            pawn.ownership = new Pawn_Ownership(pawn);
+            pawn.connections = new Pawn_ConnectionsTracker(pawn);
 
-			if (pawn.RaceProps.Humanlike)
+            if (pawn.RaceProps.Humanlike)
+            {
+                if (pawn.guest == null)
+                {
+                    pawn.guest = new Pawn_GuestTracker(pawn);
+                }
+                if (pawn.guilt == null)
+                {
+                    pawn.guilt = new Pawn_GuiltTracker(pawn);
+                }
+                if (pawn.workSettings == null)
+                {
+                    pawn.workSettings = new Pawn_WorkSettings(pawn);
+                }
+                if (pawn.styleObserver == null)
+                {
+                    pawn.styleObserver = new Pawn_StyleObserverTracker(pawn);
+                }
+                if (pawn.surroundings == null)
+                {
+                    pawn.surroundings = new Pawn_SurroundingsTracker(pawn);
+                }
+            }
+            if (pawn.RaceProps.Humanlike)
             {
 				pawn.ideo = new Pawn_IdeoTracker(pawn);
 			}
@@ -277,8 +333,13 @@ namespace SalvagedStart
 				}
 
 				var comp = thing.TryGetComp<CompIngredients>();
+                if (comp != null)
+                {
+                    Log.Message(thing + " has " + comp + " - " + comp.ingredients?.Count + " - " + string.Join(", ", comp.ingredients ?? new List<ThingDef>()));
+                }
 				if (comp != null && (comp.ingredients is null || comp.ingredients.Any(x => x is null)))
                 {
+                    Log.Message("Cannot load " + thing);
 					return false;
                 }
 				return true;

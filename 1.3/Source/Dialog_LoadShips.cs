@@ -114,7 +114,13 @@ namespace SalvagedStart
 			CountToTransferChanged();
 		}
 
-		public bool TryAcceptOverride()
+        public override void PostOpen()
+        {
+            base.PostOpen();
+			SetLoadedItemsToLoad();
+		}
+
+        public bool TryAcceptOverride()
 		{
 			List<Pawn> pawnsFromTransferables = TransferableUtility.GetPawnsFromTransferables(transferables);
 			if (!CheckForErrorsOverride(pawnsFromTransferables))

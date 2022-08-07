@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace SalvagedStart
     [HotSwappable]
 	public class Page_LoadShips : Page
     {
+		public World oldWorld;
+		public Faction oldFaction;
 		public Faction loadedPlayerFaction;
 		public Dictionary<CompTransporter, bool> ships = new Dictionary<CompTransporter, bool>();
 		public List<Pawn> pawns = new List<Pawn>();
@@ -121,9 +124,10 @@ namespace SalvagedStart
 				&& ScenPart_ConfigPage_SalvagedStart.transporters.SelectMany(x => x.GetDirectlyHeldThings()).Count(x => x is Pawn pawn 
 				&& pawn.RaceProps.Humanlike) >= ScenPart_ConfigPage_SalvagedStart.transporters.Count;
         }
-
         public override void DoNext()
         {
+			Current.CreatingWorld = oldWorld;
+			Find.GameInitData.playerFaction = oldFaction;
 			Find.GameInitData.startingAndOptionalPawns.Clear();
 			foreach (var pawn in ScenPart_ConfigPage_SalvagedStart.transporters.SelectMany(x => x.GetDirectlyHeldThings()).OfType<Pawn>())
             {
