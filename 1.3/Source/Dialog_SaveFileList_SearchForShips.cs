@@ -369,7 +369,7 @@ namespace SalvagedStart
                 {
                     return false;
                 }
-				if (thing is Corpse)
+				if (thing is Corpse corpse && corpse.InnerPawn?.def is null)
                 {
 					return false;
                 }
