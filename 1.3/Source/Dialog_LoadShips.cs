@@ -109,8 +109,9 @@ namespace SalvagedStart
 			AddPawnsToTransferablesOverride();
 			AddItemsToTransferablesOverride();
 			pawnsTransfer = new TransferableOneWayWidget(null, null, null, "FormCaravanColonyThingCountTip".Translate(), drawMass: true, IgnorePawnsInventoryMode.IgnoreIfAssignedToUnload, includePawnsMassInMassUsage: true, () => MassCapacity - MassUsage, 0f, ignoreSpawnedCorpseGearAndInventoryMass: false, -1, drawMarketValue: true, drawEquippedWeapon: true, drawNutritionEatenPerDay: true, drawItemNutrition: false, drawForagedFoodPerDay: true);
-			AddPawnsSections(pawnsTransfer, transferables);
-			itemsTransfer = new TransferableOneWayWidget(transferables.Where((TransferableOneWay x) => x.ThingDef.category != ThingCategory.Pawn), null, null, "FormCaravanColonyThingCountTip".Translate(), drawMass: true, IgnorePawnsInventoryMode.IgnoreIfAssignedToUnload, includePawnsMassInMassUsage: true, () => MassCapacity - MassUsage, 0f, ignoreSpawnedCorpseGearAndInventoryMass: false, -1, drawMarketValue: true, drawEquippedWeapon: false, drawNutritionEatenPerDay: false, drawItemNutrition: true, drawForagedFoodPerDay: false, drawDaysUntilRot: false);
+			AddPawnSections(pawnsTransfer, transferables);
+			itemsTransfer = new TransferableOneWayWidget(null, null, null, "FormCaravanColonyThingCountTip".Translate(), drawMass: true, IgnorePawnsInventoryMode.IgnoreIfAssignedToUnload, includePawnsMassInMassUsage: true, () => MassCapacity - MassUsage, 0f, ignoreSpawnedCorpseGearAndInventoryMass: false, -1, drawMarketValue: true, drawEquippedWeapon: false, drawNutritionEatenPerDay: false, drawItemNutrition: true, drawForagedFoodPerDay: false, drawDaysUntilRot: false);
+			AddItemSection(itemsTransfer, transferables);
 			CountToTransferChanged();
 		}
 
@@ -181,11 +182,16 @@ namespace SalvagedStart
 			return true;
 		}
 
-		public void AddPawnsSections(TransferableOneWayWidget widget, List<TransferableOneWay> transferables)
+		public void AddPawnSections(TransferableOneWayWidget widget, List<TransferableOneWay> transferables)
 		{
 			IEnumerable<TransferableOneWay> source = transferables.Where((TransferableOneWay x) => x.ThingDef.category == ThingCategory.Pawn);
 			widget.AddSection("ColonistsSection".Translate(), source.Where((TransferableOneWay x) => ((Pawn)x.AnyThing).IsFreeNonSlaveColonist));
 			widget.AddSection("AnimalsSection".Translate(), source.Where((TransferableOneWay x) => ((Pawn)x.AnyThing).RaceProps.Animal));
+		}
+
+		public void AddItemSection(TransferableOneWayWidget widget, List<TransferableOneWay> transferables)
+		{
+			widget.AddSection("SS.Items".Translate(), transferables.Where(x => x.ThingDef.category != ThingCategory.Pawn));
 		}
 
 		private void AddPawnsToTransferablesOverride()

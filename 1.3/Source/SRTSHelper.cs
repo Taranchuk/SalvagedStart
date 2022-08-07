@@ -15,7 +15,10 @@ namespace SalvagedStart
 			{
 				ThingOwner directlyHeldThings = transporter.GetDirectlyHeldThings();
 				Thing thing = ThingMaker.MakeThing(ThingDef.Named(transporter.parent.def.defName));
-				GenSpawn_Spawn_Patch.arrivingThings.Add(thing);
+				if (Rand.Chance(SalvagedStartMod.settings.shipCrashChance))
+				{
+					Current.Game.GetComponent<GameComponent_DestroyThings>().shipsToDestroy.Add(thing);
+				}
 				thing.SetFactionDirect(Faction.OfPlayer);
 				thing.Rotation = Rot4.South;
 				CompRefuelable compRefuelable = thing.TryGetComp<CompRefuelable>();
