@@ -321,6 +321,10 @@ namespace SalvagedStart
         {
 			if (thing?.def?.category == ThingCategory.Item)
             {
+                if (thing.stackCount <= 0)
+                {
+                    return false;
+                }
 				if (thing is Corpse)
                 {
 					return false;
