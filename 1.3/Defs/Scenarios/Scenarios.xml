@@ -9,10 +9,43 @@
 	<pageClass>SalvagedStart.Page_LoadShips</pageClass>
     <summaryPriority>500</summaryPriority>
   </ScenPartDef>
+
+  <ScenPartDef>
+    <defName>SS_SalvagedStartKeepResearchProgress</defName>
+    <label>salvaged start - keep research progress</label>
+    <category>Fixed</category>
+    <scenPartClass>SalvagedStart.ScenPart_KeepResearchProgress</scenPartClass>
+    <summaryPriority>500</summaryPriority>
+  </ScenPartDef>
   
   <ScenarioDef>
-    <defName>SS_SalvagedStart</defName>
-    <label>Salvaged start</label>
+    <defName>SS_SalvagedStartTribal</defName>
+    <label>Salvaged Start - Tribal</label>
+    <description>.</description>
+    <scenario>
+      <summary>Salvaged start.</summary>
+      <playerFaction>
+        <def>PlayerFaction</def>
+        <factionDef>PlayerTribe</factionDef>
+      </playerFaction>
+      <parts>
+        <li Class="SalvagedStart.ScenPart_ConfigPage_SalvagedStart">
+          <def>SS_ConfigPage_SalvagedStart</def>
+        </li>
+		
+        <li Class="ScenPart_GameStartDialog">
+          <def>GameStartDialog</def>
+          <textKey>SS.GameStartDialogTribal</textKey>
+          <closeSound>GameStartSting</closeSound>
+        </li>
+
+      </parts>
+    </scenario>
+  </ScenarioDef>
+
+  <ScenarioDef>
+    <defName>SS_SalvagedStartCrashlanded</defName>
+    <label>Salvaged Start - Crashlanded</label>
     <description>.</description>
     <scenario>
       <summary>Salvaged start.</summary>
@@ -21,20 +54,48 @@
         <factionDef>PlayerColony</factionDef>
       </playerFaction>
       <parts>
-
-
+	  
         <li Class="SalvagedStart.ScenPart_ConfigPage_SalvagedStart">
           <def>SS_ConfigPage_SalvagedStart</def>
         </li>
 		
         <li Class="ScenPart_GameStartDialog">
           <def>GameStartDialog</def>
-          <textKey>SS.GameStartDialog</textKey>
+          <textKey>SS.GameStartDialogCrashlanded</textKey>
           <closeSound>GameStartSting</closeSound>
         </li>
 
       </parts>
     </scenario>
   </ScenarioDef>
+  
+  <ScenarioDef>
+    <defName>SS_SalvagedStartCrashlandedt</defName>
+    <label>Salvaged Start - test</label>
+    <description>.</description>
+    <scenario>
+      <summary>Salvaged start.</summary>
+      <playerFaction>
+        <def>PlayerFaction</def>
+        <factionDef>PlayerColony</factionDef>
+      </playerFaction>
+      <parts>
+	  
+        <li Class="SalvagedStart.ScenPart_ConfigPage_SalvagedStart">
+          <def>SS_ConfigPage_SalvagedStart</def>
+        </li>
+		
+        <li Class="SalvagedStart.ScenPart_KeepResearchProgress">
+          <def>SS_SalvagedStartKeepResearchProgress</def>
+        </li>
+		
+        <li Class="ScenPart_GameStartDialog">
+          <def>GameStartDialog</def>
+          <textKey>SS.GameStartDialogCrashlanded</textKey>
+          <closeSound>GameStartSting</closeSound>
+        </li>
 
+      </parts>
+    </scenario>
+  </ScenarioDef>
 </Defs>

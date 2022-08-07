@@ -53,6 +53,7 @@ namespace SalvagedStart
                 var factionNodes = root.SelectNodes("//savegame/game/world/factionManager/allFactions/li");
                 var ideoNodes = root.SelectNodes("//savegame/game/world/ideoManager/ideos/li");
                 var thingNodes = root.SelectNodes("//savegame/game/maps/li/things/thing");
+                var researchNode = root.SelectSingleNode("//savegame/game/researchManager");
                 Scribe.mode = LoadSaveMode.LoadingVars;
                 Log_Error_Patch.suppressMessages = true;
 
@@ -72,7 +73,7 @@ namespace SalvagedStart
                 newWorld.FillComponents();
                 parent.oldFaction = Find.GameInitData.playerFaction;
                 Find.GameInitData.playerFaction = parent.loadedPlayerFaction;
-
+                ScenPart_KeepResearchProgress.prevResearchManager = ScribeExtractor.SaveableFromNode<ResearchManager>(researchNode, null);
                 var ideos = new List<Ideo>();
                 foreach (XmlNode ideoNode in ideoNodes)
                 {

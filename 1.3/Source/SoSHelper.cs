@@ -23,6 +23,7 @@ namespace SalvagedStart
 			if (comp != null)
 			{
 				Pawn meAsAPawn = CompBecomePawn.myPawn(transporter.parent, default(IntVec3), 99999);
+				GenSpawn_Spawn_Patch.arrivingThings.Add(meAsAPawn);
 				Find.WorldPawns.PassToWorld(meAsAPawn, PawnDiscardDecideMode.KeepForever);
 				meAsAPawn.SetFaction(transporter.parent.Faction);
 				ThingOwner directlyHeldThings = transporter.GetDirectlyHeldThings();

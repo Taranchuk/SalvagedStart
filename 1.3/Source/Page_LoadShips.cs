@@ -18,12 +18,10 @@ namespace SalvagedStart
 		public List<Pawn> pawns = new List<Pawn>();
 		public List<Thing> items = new List<Thing>();
 		public override string PageTitle => "SS.SalvagedStart".Translate();
-
         public override void PostOpen()
         {
             base.PostOpen();
 			ScenPart_ConfigPage_SalvagedStart.transporters.Clear();
-			this.absorbInputAroundWindow = false;
 		}
 
 		public float scrollHeight;

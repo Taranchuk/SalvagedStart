@@ -55,6 +55,7 @@
     <Compile Include="Patches\Dialog_LoadTransporters_TryAccept_Patch.cs" />
     <Compile Include="Dialog_SaveFileList_SearchForShips.cs" />
     <Compile Include="HotSwappableAttribute.cs" />
+    <Compile Include="Patches\GenSpawn_Spawn_Patch.cs" />
     <Compile Include="Patches\Log_Error_Patch.cs" />
     <Compile Include="Patches\Log_Warning_Patch.cs" />
     <Compile Include="Patches\PageUtility_StitchedPages_Patch.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Page_Stub.cs" />
     <Compile Include="SalvagedStartMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenPart_ConfigPage_KeepResearchProgress.cs" />
     <Compile Include="ScenPart_ConfigPage_SalvagedStart.cs" />
     <Compile Include="SettingsHelper.cs" />
     <Compile Include="SoSHelper.cs" />
