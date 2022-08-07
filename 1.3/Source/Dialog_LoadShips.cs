@@ -140,6 +140,18 @@ namespace SalvagedStart
 					transporters[i % transporters.Count].GetDirectlyHeldThings().TryAdd(splitPiece.TryMakeMinified());
 				});
 			}
+			foreach (var transporter in transporters)
+			{
+				if (!transporter.GetDirectlyHeldThings().Any(x => x is Pawn pawn && pawn.RaceProps.Humanlike))
+                {
+					var otherPawns = transporters.Except(transporter).SelectMany(x => x.GetDirectlyHeldThings()).OfType<Pawn>().Where(x => x.RaceProps.Humanlike).ToList();
+					if (otherPawns.Count > 1 && otherPawns.TryRandomElement(out var pilot))
+                    {
+						transporter.GetDirectlyHeldThings().TryAddOrTransfer(pilot);
+					}
+				}
+			}
+
 			return true;
 		}
 
