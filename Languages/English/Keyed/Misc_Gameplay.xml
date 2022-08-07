@@ -29,7 +29,7 @@
 	<SS.ScenPart_SalvagedStart>Salvaged start. Extract pawns and items from your save.</SS.ScenPart_SalvagedStart>
 	<SS.ChanceOfDowningPawnUponCrash>Chance of downing pawn upon crash</SS.ChanceOfDowningPawnUponCrash>
 	<SS.ChanceOfOfExplosionUponCrash>Chance of explosion upon crash</SS.ChanceOfOfExplosionUponCrash>
-	<SS.TakeAll>Take all</SS.TakeAll>
+	<SS.TakeAll>Load all</SS.TakeAll>
 	<SS.Items>Items</SS.Items>
 	<SS.ShipCrashed>Ship crashed</SS.ShipCrashed>
 	<SS.ShipCrashedDesc>{PAWN_nameDef} lost control while attempting to land. {1} has been destroyed, and some of the passengers may have been injured.</SS.ShipCrashedDesc>

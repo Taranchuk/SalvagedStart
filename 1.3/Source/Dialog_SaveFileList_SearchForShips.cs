@@ -205,6 +205,10 @@ namespace SalvagedStart
 
         private static Thing GetShuttle(Thing thing)
         {
+            if (thing.def.defName == "VFEA_AncientSupplySlingshot")
+            {
+                return null;
+            }
             var comp = thing.TryGetComp<CompTransporter>();
             if (comp != null)
             {
