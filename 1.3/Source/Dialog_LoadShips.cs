@@ -200,7 +200,10 @@ namespace SalvagedStart
 		{
 			foreach (Thing item in this.items)
 			{
-				AddToTransferables(item);
+				if (item.stackCount > 0)
+                {
+					AddToTransferables(item);
+				}
 			}
 		}
 	}
