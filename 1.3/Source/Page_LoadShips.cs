@@ -143,7 +143,7 @@ namespace SalvagedStart
 					{
 						continue;
 					}
-					PawnRelationDef mostImportantRelation = potentiallyRelatedPawn.GetMostImportantRelation(loadedPawn);
+					PawnRelationDef mostImportantRelation = loadedPawn.GetMostImportantRelation(potentiallyRelatedPawn);
 					if (mostImportantRelation != null)
 					{
 						ThoughtDef genderSpecificThought = mostImportantRelation.GetGenderSpecificThought(potentiallyRelatedPawn, PawnDiedOrDownedThoughtsKind.Lost);
